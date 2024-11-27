@@ -19,13 +19,29 @@ public class Game {
         }
     }
 
-    public void start() throws InvalidChessPieceException {
+    private boolean isValidInputPosition(String position) {
+        int row = position.charAt(1) - '0';
+        int column = position.charAt(0);
+        return row >=1 && row <=8 && column >= 'A' && column <= 'H';
+    }
+
+    public void start() throws InvalidChessPieceException, InvalidInputFormatException {
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
-        String pieceName = input.split(",")[0];
-        String currentPos = input.split(",")[1].trim().toUpperCase();
-        ChessPiece piece = getAppropriateChessPiece(pieceName);
-        String possibleMovesOfPiece = piece.getPossibleMoves(currentPos).toString();
-        System.out.println(possibleMovesOfPiece);
+        if (input.contains(",")) {
+            String pieceName = input.split(",")[0];
+            String currentPos = input.split(",")[1].trim().toUpperCase();
+            ChessPiece chessPiece = getAppropriateChessPiece(pieceName);
+            if (isValidInputPosition(currentPos)) {
+                String possibleMoves = chessPiece.getPossibleMoves(currentPos).toString();
+                System.out.println(possibleMoves);
+            } else {
+                System.err.println("Position entered is out of range for a 8X8 chess board." +
+                        "Please re-enter the input with valid position.");
+                start();
+            }
+        } else {
+            throw new InvalidInputFormatException();
+        }
     }
 }
