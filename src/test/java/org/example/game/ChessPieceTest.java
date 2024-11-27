@@ -2,6 +2,7 @@ package org.example.game;
 
 import org.example.game.pieces.King;
 import org.example.game.pieces.Pawn;
+import org.example.game.pieces.Queen;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -51,6 +52,42 @@ public class ChessPieceTest {
 
         // Expected moves for a King at A1
         List<String> expectedMoves = List.of("A2", "B1", "B2");
+
+        assertEquals(expectedMoves.size(), possibleMoves.size());
+        assertTrue(possibleMoves.containsAll(expectedMoves));
+    }
+
+    @Test
+    void testQueenMoves() {
+        ChessPiece queen = new Queen();
+        List<String> possibleMoves = queen.getPossibleMoves("D5");
+
+        // Expected moves for a Queen at D5
+        List<String> expectedMoves = List.of(
+                "C4", "B3", "A2", "E6", "F7", "G8",
+                "C6", "B7", "A8",
+                "E4", "F3", "G2", "H1",
+                "C5", "B5", "A5",
+                "D4", "D3", "D2", "D1",
+                "D6", "D7", "D8",
+                "E5", "F5", "G5", "H5"
+        );
+
+        assertEquals(expectedMoves.size(), possibleMoves.size());
+        assertTrue(possibleMoves.containsAll(expectedMoves));
+    }
+
+    @Test
+    void testQueenEdgeMoves() {
+        ChessPiece queen = new Queen();
+        List<String> possibleMoves = queen.getPossibleMoves("H1");
+
+        // Expected moves for a Queen at H1
+        List<String> expectedMoves = List.of(
+                "G1", "F1", "E1", "D1", "C1", "B1", "A1",
+                "H2", "H3", "H4", "H5", "H6", "H7", "H8",
+                "G2", "F3", "E4", "D5", "C6", "B7", "A8"
+        );
 
         assertEquals(expectedMoves.size(), possibleMoves.size());
         assertTrue(possibleMoves.containsAll(expectedMoves));
