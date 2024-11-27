@@ -1,10 +1,16 @@
 package org.example.game;
 
+import org.example.game.pieces.Pawn;
+
 import java.util.Scanner;
 
 public class Game {
     private ChessPiece getAppropriateChessPiece(String piece) throws InvalidChessPieceException {
-       throw new InvalidChessPieceException(piece);
+        if (piece.equalsIgnoreCase("pawn")) {
+            return new Pawn();
+        } else {
+            throw new InvalidChessPieceException(piece);
+        }
     }
 
     public void start() throws InvalidChessPieceException {
